@@ -7,7 +7,7 @@
 <ion-content padding>
   <h5 class="center">{{currentDate}}</h5>
   <h1 class="center">{{currentTime}}</h1>
-  <img class="center_img" src="assets/images/pin.jpg">
-  <button ion-button round large block (click)="checkIn()">Check In Now</button>
+  <img class="center_img" src="assets/images/{{icon}}">
+  <button ion-button round large block (click)="checkIn(this)">Check In Now</button>
 </ion-content>
 <script src="components/moment/moment.js"></script>
