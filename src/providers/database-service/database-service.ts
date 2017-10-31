@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
-import { Firebase } from '@ionic-native/firebase';
 import { Storage } from '@ionic/storage';
-
+import moment from 'moment';
 /*
   Generated class for the DatabaseServiceProvider provider.
 
@@ -15,7 +14,6 @@ export class DatabaseServiceProvider {
   userId: String
   constructor(private database: AngularFireDatabase,
     private uniqueDeviceID: UniqueDeviceID,
-    private firebase: Firebase,
     private storage: Storage, ) {
     console.log('Hello DatabaseServiceProvider Provider');
   }
@@ -38,8 +36,20 @@ export class DatabaseServiceProvider {
       return this.userId = userId
     })
   }
+  isNotYetCheckIn(todo){
+   this.database.list('/earlybird/' + this.userId+'/check-in', 
+    ref=>ref.limitToLast(1)).query.once('value',v=>{
+      let vjson=v.toJSON()
+      if(vjson!=null){
+      let item=(<any>Object).values(vjson)[0]
+      console.log('last timestamp: '+item)
+      if(!moment(item).isAfter(moment().startOf('day')))
+        todo()
+      }else todo()
+    })
+  }
   checkIn() {
     console.log(this.userId + ' checked in at ' + new Date())
-    this.database.list('/earlybird/' + this.userId).push({ timestamp: Date.now() })
+    this.database.list('/earlybird/' + this.userId+'/check-in').push(Date.now())
   }
 }

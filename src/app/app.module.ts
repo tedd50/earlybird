@@ -12,7 +12,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id';
-import { Firebase } from '@ionic-native/firebase';
 import { DatabaseServiceProvider } from '../providers/database-service/database-service';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -57,7 +56,6 @@ export const firebaseConfig = {
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     UniqueDeviceID,
-    Firebase,
     DatabaseServiceProvider
   ]
 })
